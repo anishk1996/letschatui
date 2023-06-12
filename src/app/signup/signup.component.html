@@ -1,0 +1,38 @@
+<form class="text-center row">
+    <div class="col-lg-6 col-xl-5 col-md-9 mx-auto">
+        <br>
+        <h1 class="h3 mb-3 fw-normal">Please Sign Up</h1>
+        <br><br>
+        <div class="form-floating">
+            <input type="text" name="username" class="form-control" id="floatingUsername" placeholder="johndoe" [(ngModel)]="signupViewModel.name">
+            <label for="floatingUsername">User Name</label>
+        </div>
+        <br>
+        <div class="form-floating">
+            <input type="email" name="email" class="form-control" id="floatingInput"
+                placeholder="name@example.com" [(ngModel)]="signupViewModel.email">
+            <label for="floatingInput">Email address</label>
+        </div>
+        <br>
+        <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="floatingPassword"
+                placeholder="Password" [(ngModel)]="signupViewModel.password">
+            <label for="floatingPassword">Password</label>
+        </div>
+        <br>
+        <div class="form-floating">
+            <input type="password" name="cpassword" class="form-control" id="floatingPassword1"
+                placeholder="Confirm Password" [(ngModel)]="signupViewModel.password">
+            <label for="floatingPassword1">Password</label>
+        </div>
+        <br>
+        <div>
+            <input type="button" name="button" class="w-100 btn btn-lg btn-primary" id="signin-btn"
+            (click)="onSignInClick()" value="Sign Up">
+            <span class="text-danger">{{signupError}}&nbsp;</span>
+        </div>
+
+        <p class="mt-5 mb-3 text-muted">Already signed up? <a (click)="openlogin()">Sign In</a></p>
+        <p class="mt-5 mb-3 text-muted">&copy;2023</p>
+    </div>
+</form>

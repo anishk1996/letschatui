@@ -1,0 +1,20 @@
+.cursor {
+    cursor: pointer;
+}
+
+.message_area {
+    min-height: 68vh;
+    max-height: 68vh;
+    overflow-y: auto;
+}
+
+.incoming {
+    background: #8F8BE8;
+    color: #fff;
+}
+
+.outgoing {
+    background: #e9eafd;
+    color: #787986;
+    margin-left: auto;
+}
