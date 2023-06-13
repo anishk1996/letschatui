@@ -1,4 +1,5 @@
 export const environment = {
     production: true,
-    endpoint: 'https://letchatservice.vercel.app'
+    endpoint: 'https://letschatservice.onrender.com/',
+    commentedendpoint: 'https://letchatservice.vercel.app'
   };
