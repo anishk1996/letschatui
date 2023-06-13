@@ -17,11 +17,7 @@
             </div>
         </div>
         <div class="col-xs-10 col-sm-10 col-lg-10">
-            <div *ngIf="isLoading" class="d-flex justify-content-center m-5 pt-10">
-                <div class="spinner-border text-primary" role="status">
-                </div>
-            </div>
-            <div class="card mx-auto" [hidden]="closed" *ngIf="selectedUserID != -1 && !isLoading">
+            <div class="card mx-auto" [hidden]="closed" *ngIf="selectedUserID != -1">
                 <div class="card-header">
                     <div class="navbar nabvar-expand">
                         <ul class="navbar-nav me-auto align-items-center">
@@ -79,4 +75,7 @@
             </div>
         </div>
     </div>
+    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+        <p style="color: white">Please Wait. </p>
+    </ngx-spinner>
 </div>

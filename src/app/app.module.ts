@@ -14,6 +14,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderComponent } from './header/header.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
+import { NgxSpinnerModule } from "ngx-spinner";  
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { environment } from '../environments/environment';
       url: environment.endpoint,
       options: {}
     }),
+    BrowserAnimationsModule,
+    NgxSpinnerModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,
