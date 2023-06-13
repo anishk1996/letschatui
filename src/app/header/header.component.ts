@@ -23,8 +23,6 @@ export class HeaderComponent implements OnInit{
     });
   }
   navigate(url: any) {
-    console.log('clicked');
-    
     this.route.navigateByUrl('/' + url);
   }
 

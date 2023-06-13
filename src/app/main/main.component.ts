@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { SocketService } from '../services/socket.service';
 import { UsersService } from '../services/users.service';
 
@@ -9,6 +9,7 @@ import { UsersService } from '../services/users.service';
 })
 export class MainComponent {
 
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
   message: any = '';
   users: any = [];
   chats: any = [];
@@ -17,16 +18,30 @@ export class MainComponent {
   previousSelectedUserID: any = -1;
   selectedUserID: any = -1;
   selectedChatID: any = -1;
+  selectedUserName: any = '';
+  closed: boolean = false;
   isLoading: boolean = false;
+  hideList: boolean = false;
+
   constructor(private socketService: SocketService, private userService: UsersService) {
     this.socketService.tryReceivingMsg();
+  }
+  
+  toggleList() {
+    this.hideList = !this.hideList;
+  }
+  
+  scrollToBottom() {
+      setTimeout(() => {
+        const container = this.scrollContainer.nativeElement;
+        container.scrollTop = container.scrollHeight;          
+      }, 100);
   }
 
   ngOnInit(): void {
     // Waiting for messages
     this.socketService.getChat().subscribe((response: any) => {
       if (response) {
-        console.log('message from service emit', response);
         response['type'] = 'incoming';
         this.chats.push(response);
         this.newChats.push(response);
@@ -36,7 +51,6 @@ export class MainComponent {
     //waiting for notgification
     this.socketService.getNotification().subscribe((response: any) => {
       if(response) {
-        console.log('Notification received', response);
         this.notification.push(response);
 
       }
@@ -71,24 +85,25 @@ export class MainComponent {
     this.chats.push(data);
     this.newChats.push(data);
     this.message = '';
+    this.scrollToBottom();
   }
 
   async userSelected(index: any) {
     this.isLoading = true;
+    this.toggleList();
+    this.closed = false;
     if (this.users[index]._id != this.selectedUserID) {
       this.previousSelectedUserID = this.selectedUserID;
+      this.selectedUserName = this.users[index].name;
       this.selectedUserID = this.users[index]._id;
     }
     if (this.previousSelectedUserID != -1) {
       await this.saveMessages();
     }
-    console.log('Selected user', this.users[index]);
     this.userService.getChat(this.selectedUserID).subscribe(async (response) => {
       if (response == null) {
         this.createSelectedUserChat(this.selectedUserID);
       } else {
-        console.log('response got', response);
-        console.log('chat id', response._id);
         this.selectedChatID = response._id;
         this.socketService.joinChatRoom(response._id);
         await this.getMessages();
@@ -102,9 +117,9 @@ export class MainComponent {
               this.notification.splice(i, 1);
             }
           }
-        } else {
         }
         this.isLoading = false;
+        this.scrollToBottom();
       }
     });
   }
@@ -112,8 +127,6 @@ export class MainComponent {
   async createSelectedUserChat(id: any) {
     this.userService.createChat(id).subscribe((response) => {
       if (response.length !== 0) {
-        console.log('response created', response[0]);
-        console.log('chat id', response[0]._id);
         this.selectedChatID = response[0]._id;
         this.socketService.joinChatRoom(response[0]._id);
         this.isLoading = false;
@@ -122,7 +135,6 @@ export class MainComponent {
   }
 
   async saveMessages() {
-    console.log('all chats', this.newChats);
     if (this.newChats.length > 0) {
       this.userService.saveMessages(this.newChats).subscribe((response) => {
       });
@@ -145,7 +157,13 @@ export class MainComponent {
           this.chats.push(item);
         });
       }
+      this.scrollToBottom();
     });
+  }
+
+  async onChatClose() {
+    this.closed = true;
+    this.toggleList();
   }
 
 }

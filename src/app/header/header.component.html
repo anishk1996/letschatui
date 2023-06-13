@@ -1,15 +1,15 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-success">
   <div class="container-fluid">
-    <a class="navbar-brand">Letschat</a>
+    <a href="#!" class="navbar-brand">Letschat</a>
     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div [ngSwitch]="menu" class="collapse navbar-collapse" id="navbarCollapse">
         <div *ngSwitchCase="'user'" class="navbar-nav">
-          <a class="nav-item nav-link active" (click)="navigate('main')">Main</a>
+          <a href="#!" class="nav-item nav-link active" (click)="navigate('main')">Main</a>
         </div>
         <div class="navbar-nav">
-          <a class="nav-item nav-link">About Us</a>
+          <a href="#!" class="nav-item nav-link">About Us</a>
         </div>  
         <div *ngSwitchCase="'user'" class="navbar-nav ms-auto">
           <span class="nav-item nav-link">{{username | uppercase}}</span>

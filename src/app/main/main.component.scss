@@ -2,12 +2,6 @@
     cursor: pointer;
 }
 
-.message_area {
-    min-height: 68vh;
-    max-height: 68vh;
-    overflow-y: auto;
-}
-
 .incoming {
     background: #8F8BE8;
     color: #fff;
@@ -18,3 +12,9 @@
     color: #787986;
     margin-left: auto;
 }
+
+@media (max-width: 767px) {
+    .hide-list {
+      display: none;
+    }
+  }
