@@ -54,7 +54,7 @@
                                             {{item.msg}}
                                         </div>
                                         <div class="small p-1 m-0">
-                                            {{item.time | date: 'h:mm a'}}
+                                            <p [ngStyle]="{ 'color': messageRead ? 'blue': 'black' }">{{item.time | date: 'h:mm a'}}</p>
                                         </div>
                                     </div>
                                 </div>

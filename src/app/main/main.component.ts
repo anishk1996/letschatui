@@ -22,6 +22,7 @@ export class MainComponent {
   selectedUserName: any = '';
   closed: boolean = false;
   hideList: boolean = false;
+  messageRead: boolean = false;
 
   constructor(private socketService: SocketService, private userService: UsersService, private SpinnerService: NgxSpinnerService) {
     this.socketService.tryReceivingMsg();
@@ -31,13 +32,6 @@ export class MainComponent {
     this.hideList = !this.hideList;
   }
   
-  scrollToBottom() {
-      setTimeout(() => {
-        const container = this.scrollContainer.nativeElement;
-        container.scrollTop = container.scrollHeight;          
-      }, 100);
-  }
-
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe((response) => {
       if (response) {
@@ -50,8 +44,9 @@ export class MainComponent {
       if (response) {
         response['type'] = 'incoming';
         this.chats.push(response);
-        this.newChats.push(response);
-        this.saveMessages();
+        if(this.selectedChatID != -1 && this.chats.length > 0 && this.newChats.length > 0) {
+          this.socketService.sendReadSignal(this.newChats[this.newChats.length-1]);
+        }
         this.scrollToBottom()
       }
     });
@@ -60,6 +55,13 @@ export class MainComponent {
     this.socketService.getNotification().subscribe((response: any) => {
       if(response) {
         this.notification.push(response);
+      }
+    });
+
+    //waiting for read signal
+    this.socketService.getReadSignal().subscribe((response: any) => {
+      if(response) {
+        this.messageRead = true;
       }
     });
 
@@ -89,7 +91,6 @@ export class MainComponent {
             if (item.chat._id == this.selectedChatID) {
               item['type'] = 'incoming';
               this.chats.push(item);
-              this.newChats.push(item);
               this.notification.splice(i, 1);
               this.saveMessages();
             }
@@ -115,7 +116,6 @@ export class MainComponent {
     const currentId = sessionStorage.getItem("currentUser") ? JSON.parse(sessionStorage.getItem("currentUser") as string)._id: null
     this.userService.getMessages(this.selectedChatID).subscribe((response) => {
       if (response.length != 0) {
-        this.chats.push(response);
         response.forEach((item: any) => {
           if (item.sender._id == currentId) {
             item.type = 'outgoing';
@@ -152,6 +152,7 @@ export class MainComponent {
     this.newChats.push(data);
     this.saveMessages();
     this.message = '';
+    this.messageRead = false;
     this.scrollToBottom();
   }
 
@@ -161,6 +162,13 @@ export class MainComponent {
       });
     }
     this.newChats = [];
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      const container = this.scrollContainer.nativeElement;
+      container.scrollTop = container.scrollHeight;
+    }, 100);
   }
 
   async onChatClose() {
