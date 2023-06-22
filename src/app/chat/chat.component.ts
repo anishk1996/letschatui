@@ -26,7 +26,7 @@ export class ChatComponent {
   fileData: any;
   selectedFileName: any;
   fileType: any;
-  file_resource_type: any;
+  file_resource_type: any = '';
   chats: any = {};
   newChats: any = [];
   notification: any = [];
