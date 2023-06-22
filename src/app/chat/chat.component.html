@@ -30,7 +30,7 @@
                         <div class="d-flex align-items-baseline mb-4" *ngSwitchCase="'incoming'">
                             <div class="pe-2">
                                 <div *ngIf="item.file && item.file_type == 'image'">
-                                    <img [src]="item.file" width="30%"/>
+                                    <img [src]="item.file" width="30%" class="zoom"/>
                                 </div>
                                 <div *ngIf="item.file && item.file_type == 'video'">
                                     <video width="30%" controls>
@@ -54,7 +54,7 @@
                             *ngSwitchCase="'outgoing'">
                             <div class="pe-2">
                                 <div *ngIf="item.file && item.file_type == 'image'">
-                                    <img [src]="item.file" width="30%"/>
+                                    <img [src]="item.file" width="30%" class="zoom"/>
                                 </div>
                                 <div *ngIf="item.file && item.file_type == 'video'">
                                     <video width="30%" controls>
@@ -81,22 +81,25 @@
         </div>
     </div>
     <div class="card-footer positive-absolute bottom-0 m-0 p-1">
-        <div class="input-group" >
-
+        <div class="input-group" *ngIf="selectedFileName">
+            <p>Selected File: {{ selectedFileName }}</p>
+            <div class="me-auto justify-content-end" (click)="onFileDelete()">
+                <i class="fa fa-times"></i>
+            </div>
         </div>
         <div class="input-group mb-3 fixed-input">
             <div class="m-3 cursor">
                 <i class='fa fa-paperclip' (click)="fileInput.click()">
-                    <input #fileInput type="file" (change)="sendFile($event)" style="display:none;">
+                    <input #fileInput type="file" (change)="selectFile($event)" style="display:none;">
                 </i>
             </div>
-            <input type="text" class="form-control" placeholder="Write a message..." [(ngModel)]="message" (keydown.enter)="sendMessage()">
+            <input type="text" class="form-control" placeholder="Write a message..." [(ngModel)]="message" (keydown.enter)="uploadFile()">
             <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button" (click)="sendMessage()">Send</button>
+                <button class="btn btn-outline-primary" type="button" (click)="uploadFile()">Send</button>
             </div>
         </div>
     </div>
+    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+        <p style="color: white">Please Wait. </p>
+    </ngx-spinner>
 </div>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-    <p style="color: white">Please Wait. </p>
-</ngx-spinner>

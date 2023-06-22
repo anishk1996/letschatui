@@ -12,3 +12,11 @@
     color: #787986;
     margin-left: auto;
 }
+
+.zoom:hover {
+    -ms-transform: scale(1.3); /* IE 9 */
+    -webkit-transform: scale(1.3); /* Safari 3-8 */
+    transform: scale(1.3); 
+    margin: 40px;
+    transition: transform .2s;
+  }

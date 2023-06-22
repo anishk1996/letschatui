@@ -23,7 +23,10 @@ export class ChatComponent {
   
   message: any = '';
   file: any;
+  fileData: any;
+  selectedFileName: any;
   fileType: any;
+  file_resource_type: any;
   chats: any = {};
   newChats: any = [];
   notification: any = [];
@@ -148,42 +151,79 @@ export class ChatComponent {
     this.saveMessages();
     this.message = '';
     this.file = '';
+    this.fileData = '';
     this.fileType = '';
+    this.file_resource_type = '';
+    this.selectedFileName = '';
     this.messageRead = false;
     this.scrollToBottom();
   }
 
-  sendFile(event: any) {
+  selectFile(event: any) {
+    this.file = '';
+    this.fileData = '';
+    this.fileType = '';
+    this.file_resource_type = '';
+    this.selectedFileName = '';
     const file = event.target.files[0];
+    this.fileData = file;
+    this.selectedFileName = file.name;
     const allowedImgFileTypes = ["image/png", "image/jpeg", "image/jpg"];
     const allowedVideoFileType = ["video/mp4"];
     const allowedAudioFileType = ["audio/mpeg"];
-    let file_resource_type: String = 'raw';
-    if (file && file.size <= 100*1024*1024) {
+    if (file && file.size <= 10*1024*1024) {
       if (allowedImgFileTypes.includes(file.type)) {
-        file_resource_type = 'image';
+        this.file_resource_type = 'image';
         this.fileType = 'image';
       } else if (allowedVideoFileType.includes(file.type)) {
-        file_resource_type = 'auto';
+        this.file_resource_type = 'auto';
         this.fileType = 'video';
       } else if (allowedAudioFileType.includes(file.type)) {
         this.fileType = 'audio';
-        file_resource_type = 'auto';
+        this.file_resource_type = 'auto';
       } else {
+        this.file = '';
+        this.fileData = '';
+        this.fileType = '';
+        this.file_resource_type = '';
+        this.selectedFileName = '';
         alert("You can't send this file. It might not be a image/video/audio file");
       }
-      if (file_resource_type != 'raw') {
-        this.uploadService.uploadFile(file, file_resource_type).subscribe((response: any) => {
-          console.log('response from cloudinary', response);
-          this.file = response.secure_url;
-        },
-        (err: any) => {
-          console.log('err from cloudinary', err);
-        });
-      }
     } else {
+      this.file = '';
+      this.fileData = '';
+      this.fileType = '';
+      this.file_resource_type = '';
+      this.selectedFileName = '';
       alert("You can't send this file, as it exceedes 16MB file size");
     }
+  }
+
+  async uploadFile() {
+    if (this.file_resource_type != '') {
+      this.SpinnerService.show();
+      this.uploadService.uploadFile(this.fileData, this.file_resource_type).subscribe((response: any) => {
+        console.log('response from cloudinary', response);
+        this.file = response.secure_url;
+        this.scrollToBottom();
+        this.SpinnerService.hide();
+        this.sendMessage();
+      },
+      (err: any) => {
+        console.log('err from cloudinary', err);
+        this.SpinnerService.hide();
+      });
+    } else {
+      this.sendMessage();
+    }
+  }
+
+  onFileDelete() {
+    this.file = '';
+    this.fileData = '';
+    this.fileType = '';
+    this.file_resource_type = '';
+    this.selectedFileName = '';
   }
 
   async saveMessages() {
