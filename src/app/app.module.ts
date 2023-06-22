@@ -16,6 +16,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 import { NgxSpinnerModule } from "ngx-spinner";  
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     SignupComponent,
     MainComponent,
-    HeaderComponent
+    HeaderComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
