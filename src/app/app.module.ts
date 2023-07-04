@@ -17,6 +17,7 @@ import { environment } from '../environments/environment';
 import { NgxSpinnerModule } from "ngx-spinner";  
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatComponent } from './chat/chat.component';
+import { SlangHiderPipe } from './pipe/slang-hider.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ChatComponent } from './chat/chat.component';
     SignupComponent,
     MainComponent,
     HeaderComponent,
-    ChatComponent
+    ChatComponent,
+    SlangHiderPipe
   ],
   imports: [
     BrowserModule,

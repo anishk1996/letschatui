@@ -43,7 +43,7 @@
                                       </audio>                                      
                                 </div>
                                 <div class="card incoming rounded-right d-inline-block p-2 px-3 m-1">
-                                    {{item.msg}}
+                                    {{item.msg | slangHider}}
                                 </div>
                                 <div class="small p-1 m-0">
                                     {{item.time | date: 'h:mm a'}}
@@ -67,10 +67,10 @@
                                       </audio>                                      
                                 </div>
                                 <div class="card outgoing rounded-left d-inline-block p-2 px-3 m-1">
-                                    {{item.msg}}
+                                    {{item.msg | slangHider}}
                                 </div>
                                 <div class="small p-1 m-0">
-                                    <p>{{item.time | date: 'h:mm a'}}
+                                    <p [ngStyle]="{ 'color': messageRead ? 'blue': 'black' }">{{item.time | date: 'h:mm a'}}
                                     </p>
                                 </div>
                             </div>
