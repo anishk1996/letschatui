@@ -1,4 +1,4 @@
-<div class="card mx-auto" [hidden]="closed">
+<div class="card" [hidden]="closed">
     <div class="card-header">
         <div class="navbar nabvar-expand">
             <ul class="navbar-nav" (click)="onChatClose()">
@@ -16,13 +16,13 @@
             </ul>
         </div>
     </div>
-    <div class="card-body" style="height: 500px;overflow: auto; background:linear-gradient(to bottom right, #ccffcc 0%, #99ccff 100%);" #scrollContainer>
+    <div class="card-body card-bg chat-card" #scrollContainer>
         <div class="card-text">
             <div *ngFor="let key of objectKeys(chats)">
-                <div *ngIf="myDate == key" class="d-flex justify-content-center align-items-center mb-2">
+                <div *ngIf="myDate == key" class="group_date_text d-flex justify-content-center align-items-center mb-2">
                     Today
                 </div>
-                <div *ngIf="myDate != key" class="d-flex justify-content-center align-items-center mb-2">
+                <div *ngIf="myDate != key" class="group_date_text d-flex justify-content-center align-items-center mb-2">
                     {{ key | date: 'mediumDate'}}
                 </div>
                 <div class="p-2" *ngFor="let item of chats[key]">
@@ -45,7 +45,7 @@
                                 <div class="card incoming rounded-right d-inline-block p-2 px-3 m-1">
                                     {{item.msg | slangHider}}
                                 </div>
-                                <div class="small p-1 m-0">
+                                <div class="custom_text small p-1 m-0">
                                     {{item.time | date: 'h:mm a'}}
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                                     {{item.msg | slangHider}}
                                 </div>
                                 <div class="small p-1 m-0">
-                                    <p [ngStyle]="{ 'color': messageRead ? 'blue': 'black' }">{{item.time | date: 'h:mm a'}}
+                                    <p [ngStyle]="{ 'color': messageRead ? 'blue': 'white' }">{{item.time | date: 'h:mm a'}}
                                     </p>
                                 </div>
                             </div>

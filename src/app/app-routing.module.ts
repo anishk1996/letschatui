@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { MainComponent } from './main/main.component';
 import { CanActivateService } from './services/can-activate.service';
+import { AboutComponent } from './about/about.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,9 @@ const routes: Routes = [
   },
   {
     path: "signup", component: SignupComponent
+  },
+  {
+    path: "about", component: AboutComponent
   },
   {
     path: "main", component: MainComponent, canActivate: [CanActivateService]

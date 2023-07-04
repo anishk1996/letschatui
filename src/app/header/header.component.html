@@ -1,19 +1,22 @@
 <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #4682C2;">
   <div class="container-fluid">
-    <a href="#!" class="navbar-brand">Letschat</a>
+    <button mat-icon-button *ngIf="menu == 'user' && mode == 'over'" (click)="onMenuClick()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a class="navbar-brand cursor" (click)="navigate('login')">Letschat</a>
     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div [ngSwitch]="menu" class="collapse navbar-collapse" id="navbarCollapse">
         <div *ngSwitchCase="'user'" class="navbar-nav">
-          <a href="#!" class="nav-item nav-link active" (click)="navigate('main')">Main</a>
+          <a class="nav-item nav-link active cursor" (click)="navigate('main')">Main</a>
         </div>
         <div class="navbar-nav">
-          <a href="#!" class="nav-item nav-link">About Us</a>
+          <a class="nav-item nav-link cursor" (click)="navigate('about')">About Us</a>
         </div>  
         <div *ngSwitchCase="'user'" class="navbar-nav ms-auto">
           <span class="nav-item nav-link">{{username | uppercase}}</span>
-          <a href="#" class="btn btn-info" (click)="logoutUser()">
+          <a class="btn btn-info cursor" (click)="logoutUser()">
             <i class="fa fa-sign-out" aria-hidden="true"></i>
           </a>
         </div>
