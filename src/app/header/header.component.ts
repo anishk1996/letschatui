@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
+import { SharedService } from '../services/shared.service';
+
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,8 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit{
   username: any = null;
   menu: any = 'default';
-  constructor(private route: Router, public loginService: LoginService) {}
+  mode = 'side';
+  constructor(private route: Router, public loginService: LoginService, private sharedService: SharedService) {}
 
   ngOnInit(): void {
     this.route.events.subscribe((val: any) => {
@@ -21,9 +24,22 @@ export class HeaderComponent implements OnInit{
         }
       }
     });
+
+    this.sharedService.modeChange.subscribe(() => {
+      this.mode = this.sharedService.mode;
+    });
   }
+
+  onMenuClick() {
+    this.sharedService.emitButtonClick();
+  }
+
   navigate(url: any) {
-    this.route.navigateByUrl('/' + url);
+    if (url == 'login' && this.menu != 'default') {
+      this.route.navigateByUrl('/main');
+    } else {
+      this.route.navigateByUrl('/' + url);
+    }
   }
 
   logoutUser() {

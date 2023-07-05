@@ -18,6 +18,15 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatComponent } from './chat/chat.component';
 import { SlangHiderPipe } from './pipe/slang-hider.pipe';
+import { AboutComponent } from './about/about.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -27,7 +36,8 @@ import { SlangHiderPipe } from './pipe/slang-hider.pipe';
     MainComponent,
     HeaderComponent,
     ChatComponent,
-    SlangHiderPipe
+    SlangHiderPipe,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +46,14 @@ import { SlangHiderPipe } from './pipe/slang-hider.pipe';
       options: {}
     }),
     BrowserAnimationsModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatDividerModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatMenuModule,
     NgxSpinnerModule,
     AppRoutingModule,
     HttpClientModule,

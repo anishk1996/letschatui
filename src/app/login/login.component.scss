@@ -7,3 +7,14 @@ a {
 h1 {
     font-style: italic;
 }
+
+.example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  
+  .example-margin {
+    margin: 0 10px;
+  }

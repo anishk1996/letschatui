@@ -28,7 +28,7 @@ export class SignupComponent implements OnInit{
     }, (error) => {
       this.SpinnerService.hide();
       console.log(error);
-      this.signupError = "Registration not successful"; 
+      this.signupError = error.error.message; 
     });
   }
 

@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { SocketService } from '../services/socket.service';
 import { UsersService } from '../services/users.service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { MatSidenav } from '@angular/material/sidenav';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-main',
@@ -10,13 +13,17 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class MainComponent {
 
+  @ViewChild(MatSidenav)
+  sidenav!: MatSidenav;
+
+
   users: any = [];
   selectedUserID: any = -1;
   selectedChatID: any = -1;
   selectedUserName: any = '';
   hideList: boolean = false;
 
-  constructor(private socketService: SocketService, private userService: UsersService, private SpinnerService: NgxSpinnerService) {
+  constructor(private observer: BreakpointObserver,private socketService: SocketService, private userService: UsersService, private SpinnerService: NgxSpinnerService, private sharedService: SharedService) {
   }
 
   toggleList() {
@@ -34,6 +41,35 @@ export class MainComponent {
         this.SpinnerService.hide();
       }
     });
+    this.sharedService.buttonClicked.subscribe(() => {
+      this.toggleNavbar();
+    });
+  }
+
+  ngAfterViewInit() {
+    this.observer.observe(['(max-width:800px)']).subscribe((res) => {
+      if (res.matches) {
+        this.sidenav.mode = 'over';
+        this.sidenav.close();
+        this.sharedService.mode = 'over';
+        this.sharedService.modeChangeAlert();
+      } else {
+        this.sidenav.mode = 'side';
+        this.sidenav.open();
+        this.sharedService.mode = 'side';
+        this.sharedService.modeChangeAlert();
+      }
+    })
+  }
+
+  toggleNavbar() {
+    if (this.sidenav.mode == 'over') {
+      this.sidenav.mode = 'side';
+      this.sidenav.open();
+    } else {
+      this.sidenav.mode = 'over';
+      this.sidenav.close();
+    }
   }
 
   async userSelected(index: any) {

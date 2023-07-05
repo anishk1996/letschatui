@@ -18,3 +18,47 @@
       display: none;
     }
   }
+
+mat-sidenav {
+    margin: 16px;
+    width: 200px;
+    border-right: none;
+    background: #4682C2;
+    color: white;
+    padding: 16px;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+
+.content {
+    margin: 16px;
+    margin-left: 32px;
+    border-radius: 10px;
+}
+
+mat-sidenav-container {
+    background-image: url('../../assets/background.jpg');
+    height: calc(100vh - 65px);
+}
+
+mat-divider {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.menu {
+    padding-bottom: 5px;
+}
+
+.menu-button {
+    width: 100%;
+    color: white!important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    mat-icon {
+        margin-right: 8px;
+    }
+}

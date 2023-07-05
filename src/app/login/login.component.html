@@ -18,7 +18,7 @@
         <div>
             <input type="button" class="w-100 btn btn-lg btn-primary" id="signin-btn" value="Sign In"
             (click)="onLoginClick($event)">
-            <span class="text-danger">{{loginError}}&nbsp;</span>
+            <span class="text-danger"><h2>{{loginError}}</h2></span>
         </div>
         <p class="mt-1 mb-3 text-muted">Not a user yet? <a (click)="opensignup()">Sign Up</a></p>
     </div>
@@ -29,5 +29,8 @@
     </div>
 </footer>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-    <p style="color: white">Please Wait. </p>
+    <!-- <p style="color: white">Please Wait. </p> -->
+    <mat-spinner></mat-spinner>
+    <!-- <mat-progress-spinner class="example-margin" [color]="primary" [mode]="determinate" [value]="value"></mat-progress-spinner> -->
+
 </ngx-spinner>

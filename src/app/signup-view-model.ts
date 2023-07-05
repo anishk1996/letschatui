@@ -1,5 +1,7 @@
 export class SignupViewModel {
-    name: string = "";
+    fname: string = "";
+    lname: string = "";
     email: string = "";
     password: string = "";
+    cpassword: string = "";
 }
