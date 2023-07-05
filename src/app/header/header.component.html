@@ -15,11 +15,23 @@
           <a class="nav-item nav-link cursor" (click)="navigate('about')">About Us</a>
         </div>  
         <div *ngSwitchCase="'user'" class="navbar-nav ms-auto">
-          <span class="nav-item nav-link">{{username | uppercase}}</span>
-          <a class="btn btn-info cursor" (click)="logoutUser()">
+          <button mat-button class="user cursor">
+            <mat-icon>person</mat-icon>
+            <span>{{username | uppercase}}</span>
+          </button>
+          <button mat-button class="user cursor" matTooltip="More Options" [matMenuTriggerFor]="topmenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <!-- <a class="btn btn-info cursor" (click)="logoutUser()">
             <i class="fa fa-sign-out" aria-hidden="true"></i>
-          </a>
+          </a> -->
         </div>
+        <mat-menu #topmenu="matMenu">
+          <button mat-menu-item (click)="logoutUser()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
     </div>
   </div>
 </nav>

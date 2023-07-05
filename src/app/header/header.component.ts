@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit{
 
   navigate(url: any) {
     if (url == 'login' && this.menu != 'default') {
+      this.route.navigateByUrl('/main');
     } else {
       this.route.navigateByUrl('/' + url);
     }

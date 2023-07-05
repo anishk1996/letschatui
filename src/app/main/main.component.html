@@ -4,7 +4,7 @@
             <h4>User Lists</h4>
             <mat-divider></mat-divider>
             <div class="menu" *ngFor="let user of users;let i = index;" (click)="userSelected(i)">
-                <button mat-button class="menu-button cursor">
+                <button mat-button class="menu-button cursor" [matTooltip]="user.name" matTooltipPosition="right">
                     <mat-icon>person</mat-icon>
                     <span>{{ user.name | titlecase | slice:0:15}}</span>
                 </button>

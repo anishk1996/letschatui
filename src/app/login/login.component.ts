@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit{
     }, (error) => {
       this.SpinnerService.hide();
       console.log(error);
-      this.loginError = "Invalid Username or password"; 
+      this.loginError = error.error.message; 
     });
   }
 
