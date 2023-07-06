@@ -1,21 +1,29 @@
-<div class="card" [hidden]="closed">
+<div class="card">
     <div class="card-header">
-        <div class="navbar nabvar-expand">
-            <ul class="navbar-nav" (click)="onChatClose()">
+        <div>
+            <button mat-button (click)="onChatClose()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <button mat-button>
+                <!-- <img mat-card-image src=""> -->
+                <mat-icon>account_circle</mat-icon>
+                <span>{{ userName | uppercase}}</span>
+            </button>
+            <!-- <ul class="navbar-nav" (click)="onChatClose()">
                 <li class="nav-item">
-                    <i class="fa fa-arrow-left"></i>
+                    <mat-icon>arrow_back</mat-icon>
                 </li>
             </ul>
             <ul class="navbar-nav me-auto align-items-center">
                 <li class="nav-item">
                     <span class="d-flex justify-content-center align-items-center">{{userName |
                         titlecase}} 
-                        <!-- <i [ngStyle]="{ 'color': messageRead ? 'blue': 'black' }" class="fa fa-circle fa-1"></i> -->
                     </span>
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </div>
+    <!-- mat-card -->
     <div class="card-body card-bg chat-card" #scrollContainer>
         <div class="card-text">
             <div *ngFor="let key of objectKeys(chats)">

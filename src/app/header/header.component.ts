@@ -12,7 +12,6 @@ import { SharedService } from '../services/shared.service';
 export class HeaderComponent implements OnInit{
   username: any = null;
   menu: any = 'default';
-  mode = 'side';
   constructor(private route: Router, public loginService: LoginService, private sharedService: SharedService) {}
 
   ngOnInit(): void {
@@ -23,10 +22,6 @@ export class HeaderComponent implements OnInit{
           this.menu = 'user';
         }
       }
-    });
-
-    this.sharedService.modeChange.subscribe(() => {
-      this.mode = this.sharedService.mode;
     });
   }
 

@@ -1,32 +1,38 @@
 <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #4682C2;">
-  <div class="container-fluid">
-    <button mat-icon-button *ngIf="menu == 'user' && mode == 'over'" (click)="onMenuClick()">
+  <div class="container-fluid text-white">
+    <button mat-icon-button *ngIf="menu == 'user'" (click)="onMenuClick()">
       <mat-icon>menu</mat-icon>
     </button>
     <a class="navbar-brand cursor" (click)="navigate('login')">Letschat</a>
     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-      <span class="navbar-toggler-icon"></span>
+      <mat-icon>more_vert</mat-icon>
     </button>
     <div [ngSwitch]="menu" class="collapse navbar-collapse" id="navbarCollapse">
         <div *ngSwitchCase="'user'" class="navbar-nav">
-          <a class="nav-item nav-link active cursor" (click)="navigate('main')">Main</a>
+          <button mat-button class="user cursor font-white" (click)="navigate('main')">
+            <!-- <mat-icon>home</mat-icon> -->
+            <span>Main</span>
+          </button>
+          <!-- <a class="nav-item nav-link active cursor" (click)="navigate('main')">Main</a> -->
         </div>
         <div class="navbar-nav">
-          <a class="nav-item nav-link cursor" (click)="navigate('about')">About Us</a>
+          <button mat-button class="user cursor font-white" (click)="navigate('about')">
+            <!-- <mat-icon>about</mat-icon> -->
+            <span>About Us</span>
+          </button>
+          <!-- <a class="nav-item nav-link cursor" (click)="navigate('about')">About Us</a> -->
         </div>  
         <div *ngSwitchCase="'user'" class="navbar-nav ms-auto">
-          <button mat-button class="user cursor">
-            <mat-icon>person</mat-icon>
+          <button mat-button class="user cursor font-white" [matMenuTriggerFor]="topmenu">
+            <mat-icon>list</mat-icon>
             <span>{{username | uppercase}}</span>
           </button>
-          <button mat-button class="user cursor" matTooltip="More Options" [matMenuTriggerFor]="topmenu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <!-- <a class="btn btn-info cursor" (click)="logoutUser()">
-            <i class="fa fa-sign-out" aria-hidden="true"></i>
-          </a> -->
         </div>
         <mat-menu #topmenu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>account_circle</mat-icon>
+            <span>My Profile</span>
+          </button>
           <button mat-menu-item (click)="logoutUser()">
             <mat-icon>logout</mat-icon>
             <span>Logout</span>

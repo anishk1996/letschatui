@@ -27,6 +27,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatMenuModule,
+    MatCardModule,
     NgxSpinnerModule,
     AppRoutingModule,
     HttpClientModule,

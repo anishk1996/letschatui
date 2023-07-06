@@ -33,35 +33,22 @@ export class ChatComponent {
   objectKeys = Object.keys;
   myDate: any = new Date();
   selectedUserName: any = '';
-  closed: boolean = false;
-  hideList: boolean = false;
   messageRead: boolean = false;
 
   constructor(private uploadService: UploadService, private datePipe: DatePipe, private socketService: SocketService, private userService: UsersService, private SpinnerService: NgxSpinnerService) {
-    console.log('constructor called');
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     this.socketService.tryReceivingMsg();
   }
 
-  ngOnChanges(changes: any) {
-    console.log('ngOnChanges Called', changes); 
-  }
-
   ngOnInit() {
-    console.log('ngOnInit called');
-    console.log('chat', this.chat);
-    this.SpinnerService.show();
+    // this.SpinnerService.show();
     // Waiting for messages
     this.socketService.getChat().subscribe((response: any) => {
       if (response) {
         response['type'] = 'incoming';
         this.groupChatByDate([response]);
-        // if(this.chat != -1 && this.chats.length > 0) {
-          console.log('sending read signal');
           let keys = Object.keys(this.chats);
-
           this.socketService.sendReadSignal(this.chats[keys[0]][0]);
-        // }
         this.scrollToBottom()
       }
     });
@@ -203,7 +190,6 @@ export class ChatComponent {
     if (this.file_resource_type != '') {
       this.SpinnerService.show();
       this.uploadService.uploadFile(this.fileData, this.file_resource_type).subscribe((response: any) => {
-        console.log('response from cloudinary', response);
         this.file = response.secure_url;
         this.scrollToBottom();
         this.SpinnerService.hide();
@@ -245,7 +231,6 @@ export class ChatComponent {
     this.chats = [];
     this.newChats = [];
     this.chat = '';
-    this.closed = true;
     this.chatClose.emit();
   }
 }
