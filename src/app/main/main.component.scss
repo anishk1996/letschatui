@@ -13,28 +13,19 @@
     margin-left: auto;
 }
 
-@media (max-width: 572px) {
-    .hide-list {
-      display: none;
-    }
-  }
-
 mat-sidenav {
     margin: 16px;
-    width: 200px;
-    border-right: none;
+    width: 370px;
     background: #4682C2;
     color: white;
-    padding: 16px;
-    border-radius: 5px;
+    padding: 15px;
+    border-radius: 10px;
     overflow-y: auto;
 }
 
 
 .content {
     margin: 16px;
-    margin-left: 32px;
-    border-radius: 10px;
 }
 
 mat-sidenav-container {

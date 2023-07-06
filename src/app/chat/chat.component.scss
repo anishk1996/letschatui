@@ -28,14 +28,22 @@
     margin: 40px;
     transition: transform .2s;
 }
-
-.chat-card {
-    height: 480px;
-    overflow: auto;
+.card {
+    width: 100%;
 }
 
+.chat-card {
+    // height: 480px;
+    height: 66vh;
+    overflow: auto;
+}
 
 .card-bg {
     background-image: url('../../assets/chat_bg.jpg');
     background-size: cover;
 }
+
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }

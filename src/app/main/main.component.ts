@@ -16,18 +16,16 @@ export class MainComponent {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
-
   users: any = [];
   selectedUserID: any = -1;
   selectedChatID: any = -1;
   selectedUserName: any = '';
-  hideList: boolean = false;
 
   constructor(private observer: BreakpointObserver,private socketService: SocketService, private userService: UsersService, private SpinnerService: NgxSpinnerService, private sharedService: SharedService) {
   }
 
   toggleList() {
-    this.hideList = !this.hideList;
+    this.sidenav.toggle();
     this.selectedChatID = -1;
     this.selectedUserID = -1;
     this.selectedUserName = '';
@@ -42,54 +40,40 @@ export class MainComponent {
       }
     });
     this.sharedService.buttonClicked.subscribe(() => {
-      this.toggleNavbar();
+      this.sidenav.toggle();
     });
   }
 
   ngAfterViewInit() {
-    this.observer.observe(['(max-width:800px)']).subscribe((res) => {
-      if (res.matches) {
-        this.sidenav.mode = 'over';
-        this.sidenav.close();
-        this.sharedService.mode = 'over';
-        this.sharedService.modeChangeAlert();
-      } else {
-        this.sidenav.mode = 'side';
-        this.sidenav.open();
-        this.sharedService.mode = 'side';
-        this.sharedService.modeChangeAlert();
-      }
-    })
-  }
-
-  toggleNavbar() {
-    if (this.sidenav.mode == 'over') {
-      this.sidenav.mode = 'side';
-      this.sidenav.open();
-    } else {
-      this.sidenav.mode = 'over';
-      this.sidenav.close();
-    }
+    this.sidenav.toggle();
   }
 
   async userSelected(index: any) {
-    this.toggleList();
-    this.selectedUserName = this.users[index].name;
-    this.selectedUserID = this.users[index]._id;
-    this.SpinnerService.show();
-    this.userService.getChat(this.selectedUserID).subscribe(async (response) => {
-      if (response == null) {
-        this.createSelectedUserChat(this.selectedUserID);
-      } 
-      // else if(response.message == 'jwt expired') {
-      //   this.SpinnerService.hide();
-      // } 
-      else {
-        this.selectedChatID = response._id;
-        this.socketService.joinChatRoom(response._id);
-        this.SpinnerService.hide();
-      }
-    });
+    let toLoad: boolean = false;
+    if (this.selectedUserID != -1 && this.selectedUserID == this.users[index]._id) {
+      this.sidenav.toggle();
+    } else {
+      toLoad = true;
+      this.toggleList();
+    }
+    if (toLoad) {
+      this.selectedUserName = this.users[index].name;
+      this.selectedUserID = this.users[index]._id;
+      this.SpinnerService.show();
+      this.userService.getChat(this.selectedUserID).subscribe(async (response) => {
+        if (response == null) {
+          this.createSelectedUserChat(this.selectedUserID);
+        } 
+        // else if(response.message == 'jwt expired') {
+        //   this.SpinnerService.hide();
+        // } 
+        else {
+          this.selectedChatID = response._id;
+          this.socketService.joinChatRoom(response._id);
+          this.SpinnerService.hide();
+        }
+      });
+    }
   }
 
   async createSelectedUserChat(id: any) {
