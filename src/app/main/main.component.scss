@@ -23,6 +23,12 @@ mat-sidenav {
     overflow-y: auto;
 }
 
+@media screen and (max-width: 576px) {
+    mat-sidenav {
+        margin: 10px;
+        width: 94%;
+    }
+}
 
 .content {
     margin: 16px;
