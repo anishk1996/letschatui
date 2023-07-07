@@ -113,37 +113,39 @@ export class ChatComponent {
   }
 
   sendMessage() {
-    let data = {
-      name: sessionStorage.getItem("name"),
-      time: new Date().toISOString(),
-      msg: this.message,
-      file: this.file,
-      file_type: this.fileType,
-      type: 'outgoing',
-      chat: {
-        _id: this.chat,
-        users: [
-          {
-            _id: this.selectedUserID
-          }
-        ]
-      },
-      sender: {
-        _id: sessionStorage.getItem("currentUser") ? JSON.parse(sessionStorage.getItem("currentUser") as string)._id: null
+    if (this.message != '') {
+      let data = {
+        name: sessionStorage.getItem("name"),
+        time: new Date().toISOString(),
+        msg: this.message,
+        file: this.file,
+        file_type: this.fileType,
+        type: 'outgoing',
+        chat: {
+          _id: this.chat,
+          users: [
+            {
+              _id: this.selectedUserID
+            }
+          ]
+        },
+        sender: {
+          _id: sessionStorage.getItem("currentUser") ? JSON.parse(sessionStorage.getItem("currentUser") as string)._id: null
+        }
       }
+      this.socketService.sendMessage(data);
+      this.groupChatByDate([data]);
+      this.newChats.push(data);
+      this.saveMessages();
+      this.message = '';
+      this.file = '';
+      this.fileData = '';
+      this.fileType = '';
+      this.file_resource_type = '';
+      this.selectedFileName = '';
+      this.messageRead = false;
+      this.scrollToBottom();
     }
-    this.socketService.sendMessage(data);
-    this.groupChatByDate([data]);
-    this.newChats.push(data);
-    this.saveMessages();
-    this.message = '';
-    this.file = '';
-    this.fileData = '';
-    this.fileType = '';
-    this.file_resource_type = '';
-    this.selectedFileName = '';
-    this.messageRead = false;
-    this.scrollToBottom();
   }
 
   selectFile(event: any) {

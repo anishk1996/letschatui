@@ -1,113 +1,93 @@
-<div class="card">
-    <div class="card-header">
-        <div>
-            <button mat-button (click)="onChatClose()">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <button mat-button>
-                <!-- <img mat-card-image src=""> -->
-                <mat-icon>account_circle</mat-icon>
-                <span>{{ userName | uppercase}}</span>
-            </button>
-            <!-- <ul class="navbar-nav" (click)="onChatClose()">
-                <li class="nav-item">
-                    <mat-icon>arrow_back</mat-icon>
-                </li>
-            </ul>
-            <ul class="navbar-nav me-auto align-items-center">
-                <li class="nav-item">
-                    <span class="d-flex justify-content-center align-items-center">{{userName |
-                        titlecase}} 
-                    </span>
-                </li>
-            </ul> -->
-        </div>
-    </div>
-    <!-- mat-card -->
-    <div class="card-body card-bg chat-card" #scrollContainer>
-        <div class="card-text">
-            <div *ngFor="let key of objectKeys(chats)">
-                <div *ngIf="myDate == key" class="group_date_text d-flex justify-content-center align-items-center mb-2">
-                    Today
-                </div>
-                <div *ngIf="myDate != key" class="group_date_text d-flex justify-content-center align-items-center mb-2">
-                    {{ key | date: 'mediumDate'}}
-                </div>
-                <div class="p-2" *ngFor="let item of chats[key]">
-                    <div [ngSwitch]="item.type">
-                        <div class="d-flex align-items-baseline mb-4" *ngSwitchCase="'incoming'">
-                            <div class="pe-2">
-                                <div *ngIf="item.file && item.file_type == 'image'">
-                                    <img [src]="item.file" width="30%" class="zoom"/>
-                                </div>
-                                <div *ngIf="item.file && item.file_type == 'video'">
-                                    <video width="30%" controls>
-                                        <source [src]="item.file" type="video/mp4">
-                                      </video>                                      
-                                </div>
-                                <div *ngIf="item.file && item.file_type == 'audio'">
-                                    <audio controls>
-                                        <source [src]="item.file" type="audio/mpeg">
-                                      </audio>                                      
-                                </div>
-                                <div class="card incoming rounded-right d-inline-block p-2 px-3 m-1">
-                                    {{item.msg | slangHider}}
-                                </div>
-                                <div class="custom_text small p-1 m-0">
-                                    {{item.time | date: 'h:mm a'}}
-                                </div>
+<mat-card class="example-card">
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{ userName | titlecase}}</mat-card-title>
+        <mat-card-subtitle>Personal</mat-card-subtitle>
+        <button mat-button (click)="onChatClose()" class="ms-auto" matTooltip="Back">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+    </mat-card-header>
+    <mat-card-content class="card-bg chat-card" #scrollContainer>
+        <div *ngFor="let key of objectKeys(chats)">
+            <div *ngIf="myDate == key" class="group_date_text d-flex justify-content-center align-items-center mb-2">
+                Today
+            </div>
+            <div *ngIf="myDate != key" class="group_date_text d-flex justify-content-center align-items-center mb-2">
+                {{ key | date: 'mediumDate'}}
+            </div>
+            <div class="p-2" *ngFor="let item of chats[key]">
+                <div [ngSwitch]="item.type">
+                    <div class="d-flex align-items-baseline mb-4" *ngSwitchCase="'incoming'">
+                        <div class="pe-2">
+                            <div *ngIf="item.file && item.file_type == 'image'">
+                                <img [src]="item.file" width="30%" class="zoom"/>
+                            </div>
+                            <div *ngIf="item.file && item.file_type == 'video'">
+                                <video width="30%" controls>
+                                    <source [src]="item.file" type="video/mp4">
+                                  </video>                                      
+                            </div>
+                            <div *ngIf="item.file && item.file_type == 'audio'">
+                                <audio controls>
+                                    <source [src]="item.file" type="audio/mpeg">
+                                  </audio>                                      
+                            </div>
+                            <div class="card incoming rounded-right d-inline-block p-2 px-3 m-1">
+                                {{item.msg | slangHider}}
+                            </div>
+                            <div class="custom_text small p-1 m-0">
+                                {{item.time | date: 'h:mm a'}}
                             </div>
                         </div>
-                        <div class="d-flex align-items-baseline text-end justify-content-end mb-4"
-                            *ngSwitchCase="'outgoing'">
-                            <div class="pe-2">
-                                <div *ngIf="item.file && item.file_type == 'image'">
-                                    <img [src]="item.file" width="30%" class="zoom"/>
-                                </div>
-                                <div *ngIf="item.file && item.file_type == 'video'">
-                                    <video width="30%" controls>
-                                        <source [src]="item.file" type="video/mp4">
-                                      </video>                                      
-                                </div>
-                                <div *ngIf="item.file && item.file_type == 'audio'">
-                                    <audio controls>
-                                        <source [src]="item.file" type="audio/mpeg">
-                                      </audio>                                      
-                                </div>
-                                <div class="card outgoing rounded-left d-inline-block p-2 px-3 m-1">
-                                    {{item.msg | slangHider}}
-                                </div>
-                                <div class="small p-1 m-0">
-                                    <p [ngStyle]="{ 'color': messageRead ? 'blue': 'white' }">{{item.time | date: 'h:mm a'}}
-                                    </p>
-                                </div>
+                    </div>
+                    <div class="d-flex align-items-baseline text-end justify-content-end mb-4"
+                        *ngSwitchCase="'outgoing'">
+                        <div class="pe-2">
+                            <div *ngIf="item.file && item.file_type == 'image'">
+                                <img [src]="item.file" width="30%" class="zoom"/>
+                            </div>
+                            <div *ngIf="item.file && item.file_type == 'video'">
+                                <video width="30%" controls>
+                                    <source [src]="item.file" type="video/mp4">
+                                  </video>                                      
+                            </div>
+                            <div *ngIf="item.file && item.file_type == 'audio'">
+                                <audio controls>
+                                    <source [src]="item.file" type="audio/mpeg">
+                                  </audio>                                      
+                            </div>
+                            <div class="card outgoing rounded-left d-inline-block p-2 px-3 m-1">
+                                {{item.msg | slangHider}}
+                            </div>
+                            <div class="small p-1 m-0">
+                                <p [ngStyle]="{ 'color': messageRead ? 'blue': 'white' }">{{item.time | date: 'h:mm a'}}
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card-footer positive-absolute bottom-0 m-0 p-1">
+    </mat-card-content>
+    <mat-card-actions>
         <div class="input-group" *ngIf="selectedFileName">
             <p>Selected File: {{ selectedFileName }}</p>
             <div class="me-auto justify-content-end" (click)="onFileDelete()">
                 <i class="fa fa-times"></i>
             </div>
         </div>
-        <div class="input-group mb-3 fixed-input">
-            <div class="m-3 cursor">
-                <i class='fa fa-paperclip' (click)="fileInput.click()">
-                    <input #fileInput type="file" (change)="selectFile($event)" style="display:none;">
-                </i>
-            </div>
-            <input type="text" class="form-control" placeholder="Write a message..." [(ngModel)]="message" (keydown.enter)="uploadFile()">
-            <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button" (click)="uploadFile()">Send</button>
-            </div>
-        </div>
+    <div class="input-group">
+        <button mat-icon-button (click)="fileInput.click()">
+            <mat-icon>attach_file</mat-icon>
+            <input #fileInput type="file" (change)="selectFile($event)" style="display:none;">
+        </button>
+        <input class="form-control" matInput placeholder="Write a message..." [(ngModel)]="message" (keydown.enter)="uploadFile()">
+        <button mat-raised-button (click)="uploadFile()" style="height: 47px;">
+            <span>Send</span>
+        </button>
     </div>
+    </mat-card-actions>
     <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-        <p style="color: white">Please Wait. </p>
+        <mat-spinner></mat-spinner>
     </ngx-spinner>
-</div>
+</mat-card>

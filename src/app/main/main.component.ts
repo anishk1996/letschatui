@@ -3,7 +3,6 @@ import { SocketService } from '../services/socket.service';
 import { UsersService } from '../services/users.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MatSidenav } from '@angular/material/sidenav';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { SharedService } from '../services/shared.service';
 
 @Component({
@@ -21,7 +20,7 @@ export class MainComponent {
   selectedChatID: any = -1;
   selectedUserName: any = '';
 
-  constructor(private observer: BreakpointObserver,private socketService: SocketService, private userService: UsersService, private SpinnerService: NgxSpinnerService, private sharedService: SharedService) {
+  constructor(private socketService: SocketService, private userService: UsersService, private SpinnerService: NgxSpinnerService, private sharedService: SharedService) {
   }
 
   toggleList() {
@@ -44,9 +43,9 @@ export class MainComponent {
     });
   }
 
-  ngAfterViewInit() {
-    this.sidenav.toggle();
-  }
+  // ngAfterViewInit() {
+  //   this.sidenav.toggle();
+  // }
 
   async userSelected(index: any) {
     let toLoad: boolean = false;

@@ -28,12 +28,12 @@
     margin: 40px;
     transition: transform .2s;
 }
-.card {
+
+.example-card {
     width: 100%;
 }
 
 .chat-card {
-    // height: 480px;
     height: 66vh;
     overflow: auto;
 }
@@ -44,6 +44,10 @@
 }
 
 .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-image: url('../../assets//user.jpg');
     background-size: cover;
-  }
+}
+
+.message-input {
+    width: 85%;
+}
