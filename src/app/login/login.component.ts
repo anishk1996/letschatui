@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginViewModel } from '../login-view-model';
 import { LoginService } from '../services/login.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
@@ -9,28 +10,41 @@ import { NgxSpinnerService } from "ngx-spinner";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
-  loginViewModel: LoginViewModel = new LoginViewModel();
   loginError: string = '';
+  loginForm: FormGroup | any;
   
-  constructor(private loginService: LoginService, private router: Router, private SpinnerService: NgxSpinnerService) {}
+  constructor(private loginService: LoginService, private router: Router, private SpinnerService: NgxSpinnerService, private formBuilder: FormBuilder) {}
   
   ngOnInit(): void {
     sessionStorage.removeItem("name");
     sessionStorage.removeItem("currentUser");
+
+    this.loginForm = this.formBuilder.group({
+      email: ['',  [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    });
   }
   
-  onLoginClick(event: any) {
+  onLoginClick() {
     this.SpinnerService.show();
-    this.loginService.login(this.loginViewModel).subscribe((response) => {
+    this.loginForm['submitted'] = true;
+    if (this.loginForm.valid) {
+      let loginModel = this.loginForm.value as LoginViewModel;
+      this.loginService.login(loginModel).subscribe((response) => {
+        this.SpinnerService.hide();
+        this.loginForm.reset();
+        this.router.navigateByUrl("/main");
+      }, (error) => {
+        this.SpinnerService.hide();
+        console.log(error);
+        this.loginError = error.error.message;
+      });
+    } else {
+      this.loginError = 'Please check the form again';
       this.SpinnerService.hide();
-      this.router.navigateByUrl("/main");
-    }, (error) => {
-      this.SpinnerService.hide();
-      console.log(error);
-      this.loginError = error.error.message; 
-    });
+    }
   }
 
   opensignup() {

@@ -10,17 +10,13 @@
     <div [ngSwitch]="menu" class="collapse navbar-collapse" id="navbarCollapse">
         <div *ngSwitchCase="'user'" class="navbar-nav">
           <button mat-button class="user cursor font-white" (click)="navigate('main')">
-            <!-- <mat-icon>home</mat-icon> -->
             <span>Main</span>
           </button>
-          <!-- <a class="nav-item nav-link active cursor" (click)="navigate('main')">Main</a> -->
         </div>
         <div class="navbar-nav">
           <button mat-button class="user cursor font-white" (click)="navigate('about')">
-            <!-- <mat-icon>about</mat-icon> -->
             <span>About Us</span>
           </button>
-          <!-- <a class="nav-item nav-link cursor" (click)="navigate('about')">About Us</a> -->
         </div>  
         <div *ngSwitchCase="'user'" class="navbar-nav ms-auto">
           <button mat-button class="user cursor font-white" [matMenuTriggerFor]="topmenu">

@@ -1,9 +1,10 @@
-import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { SocketService } from '../services/socket.service';
 import { UsersService } from '../services/users.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { DatePipe } from '@angular/common';
 import { UploadService } from '../services/upload.service';
+import { SoundService } from '../services/sound.service';
 
 @Component({
   selector: 'app-chat',
@@ -20,7 +21,7 @@ export class ChatComponent {
   @Output() chatClose = new EventEmitter();
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
-  
+
   message: any = '';
   file: any;
   fileData: any;
@@ -34,17 +35,22 @@ export class ChatComponent {
   myDate: any = new Date();
   selectedUserName: any = '';
   messageRead: boolean = false;
-
-  constructor(private uploadService: UploadService, private datePipe: DatePipe, private socketService: SocketService, private userService: UsersService, private SpinnerService: NgxSpinnerService) {
+  userOnline: any;
+  
+  constructor(private notificationSound: SoundService, private uploadService: UploadService, private datePipe: DatePipe, private socketService: SocketService, private userService: UsersService, private SpinnerService: NgxSpinnerService) {
     this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     this.socketService.tryReceivingMsg();
+    this.socketService.setUserStatus();
   }
 
   ngOnInit() {
-    // this.SpinnerService.show();
+    this.SpinnerService.show();
+    let status: string = '1';
+    this.socketService.userStatus(status);
     // Waiting for messages
     this.socketService.getChat().subscribe((response: any) => {
       if (response) {
+        this.notificationSound.playNotificationSound();
         response['type'] = 'incoming';
         this.groupChatByDate([response]);
           let keys = Object.keys(this.chats);
@@ -56,19 +62,21 @@ export class ChatComponent {
     //waiting for notgification
     this.socketService.getNotification().subscribe((response: any) => {
       if(response) {
+        this.notificationSound.playNotificationSound();
         this.notification.push(response);
       }
     });
 
     //waiting for read signal
-    this.socketService.getReadSignal().subscribe((response: any) => {
-      if(response) {
-        console.log('messaage read');
-        this.messageRead = true;
-      }
-    });
+    // this.socketService.getReadSignal().subscribe((response: any) => {
+    //   if(response) {
+    //     console.log('messaage read');
+    //     this.messageRead = true;
+    //   }
+    // });
     this.getMessages();
   }
+
 
   groupChatByDate(data: any) {
     data.forEach((element: any) => {
@@ -84,6 +92,8 @@ export class ChatComponent {
 
   async getMessages() {
     const currentId = sessionStorage.getItem("currentUser") ? JSON.parse(sessionStorage.getItem("currentUser") as string)._id: null
+    console.log('chat id', this.chat);
+    
     this.userService.getMessages(this.chat).subscribe((response) => {
       if (response.length != 0) {
         let arr: any = [];
@@ -233,6 +243,8 @@ export class ChatComponent {
     this.chats = [];
     this.newChats = [];
     this.chat = '';
+    let status: string = '0';
+    this.socketService.userStatus(status);
     this.chatClose.emit();
   }
 }

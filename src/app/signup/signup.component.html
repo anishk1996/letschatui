@@ -1,44 +1,82 @@
-<form class="text-center row">
+<form class="text-center row" [formGroup]="signupForm" (ngSubmit)="onSignUpClick()">
     <div class="col-lg-6 col-xl-5 col-md-9 mx-auto">
         <br>
         <h1 class="h3 mb-3 fw-normal">Please Sign Up</h1>
-        <br><br>
+        <br>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="text" name="firstname" class="form-control" id="floatingFirstname" placeholder="john" [(ngModel)]="signupViewModel.fname">
+                    <input type="text" name="firstname" class="form-control" id="floatingFirstname" placeholder="john" formControlName="fname" 
+                    [class.is-invalid]="signupForm.get('fname').invalid && (signupForm.get('fname').dirty || signupForm.get('fname').touched || signupForm['submitted'])"
+                    [class.is-valid]="signupForm.get('fname').valid && (signupForm.get('fname').dirty || signupForm.get('fname').touched || signupForm['submitted'])">
                     <label for="floatingUsername">First Name</label>
+                    <span class="text-danger" *ngIf="signupForm.get('fname').invalid && (signupForm.get('fname').dirty || signupForm.get('fname').touched || signupForm['submitted']) && signupForm.get('fname').errors?.required">First name cannot be empty</span>
+                    <span class="text-danger" *ngIf="signupForm.get('fname').invalid && (signupForm.get('fname').dirty || signupForm.get('fname').touched || signupForm['submitted']) && signupForm.get('fname').errors?.minlength">First name cannot be less than 2 characters</span>
+
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="text" name="lastname" class="form-control" id="floatingLastname" placeholder="doe" [(ngModel)]="signupViewModel.lname">
+                    <input type="text" name="lastname" class="form-control" id="floatingLastname" placeholder="doe" formControlName="lname"
+                    [class.is-invalid]="signupForm.get('lname').invalid && (signupForm.get('lname').dirty || signupForm.get('lname').touched || signupForm['submitted'])"
+                    [class.is-valid]="signupForm.get('lname').valid && (signupForm.get('lname').dirty || signupForm.get('lname').touched || signupForm['submitted'])">
                     <label for="floatingUsername">Last Name</label>
+                    <span class="text-danger" *ngIf="signupForm.get('lname').invalid && (signupForm.get('lname').dirty || signupForm.get('lname').touched || signupForm['submitted']) && signupForm.get('lname').errors?.required">Last name cannot be empty</span>
+                    <span class="text-danger" *ngIf="signupForm.get('lname').invalid && (signupForm.get('lname').dirty || signupForm.get('lname').touched || signupForm['submitted']) && signupForm.get('lname').errors?.minlength">Last name cannot be less than 2 characters</span>
                 </div>
             </div>
         </div>
         <br>
         <div class="form-floating">
-            <input type="email" name="email" class="form-control" id="floatingInput"
-                placeholder="name@example.com" [(ngModel)]="signupViewModel.email">
+            <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="email"
+            [class.is-invalid]="signupForm.get('email').invalid && (signupForm.get('email').dirty || signupForm.get('email').touched || signupForm['submitted'])"
+            [class.is-valid]="signupForm.get('email').valid && (signupForm.get('email').dirty || signupForm.get('email').touched || signupForm['submitted'])">
             <label for="floatingInput">Email address</label>
+            <span class="text-danger" *ngIf="signupForm.get('email').invalid && (signupForm.get('email').dirty || signupForm.get('email').touched || signupForm['submitted']) && signupForm.get('email').errors?.required">Email cannot be empty</span>
+            <span class="text-danger" *ngIf="signupForm.get('email').invalid && (signupForm.get('email').dirty || signupForm.get('email').touched || signupForm['submitted']) && signupForm.get('email').errors?.email">Email is not valid</span>
         </div>
         <br>
         <div class="form-floating">
-            <input type="password" name="password" class="form-control" id="floatingPassword"
-                placeholder="Password" [(ngModel)]="signupViewModel.password">
+            <input type="date" name="dob" id="dob" placeholder="Date of Birth" class="form-control" formControlName="dob"
+            [class.is-invalid]="signupForm.get('dob').invalid && (signupForm.get('dob').dirty || signupForm.get('dob').touched || signupForm['submitted'])"
+            [class.is-valid]="signupForm.get('dob').valid && (signupForm.get('dob').dirty || signupForm.get('dob').touched || signupForm['submitted'])">
+            <label for="dob">Date of Birth</label>
+            <span class="text-danger" *ngIf="signupForm.get('dob').invalid && (signupForm.get('dob').dirty || signupForm.get('dob').touched || signupForm['submitted']) && signupForm.get('dob').errors?.required">DOB cannot be empty</span>
+            <span class="text-danger" *ngIf="signupForm.get('dob').invalid && (signupForm.get('dob').dirty || signupForm.get('dob').touched || signupForm['submitted']) && signupForm.get('dob').errors?.minAge">Minimum age must be 12</span>
+        </div>
+        <br>
+        <div class="form-floating bg-white rounded p-3">
+            <span class="me-4">Gender:</span>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="male" value="male" formControlName="gender">
+                <label class="form-check-label" for="male">Male</label>    
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="female" value="female" formControlName="gender">
+                <label class="form-check-label" for="male">Female</label>
+            </div>
+        </div>
+        <span class="text-danger" *ngIf="signupForm.get('gender').invalid && (signupForm.get('gender').dirty || signupForm.get('gender').touched || signupForm['submitted']) && signupForm.get('gender').errors?.required">Please select gender<br></span>
+        <br>
+        <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" formControlName="password"
+            [class.is-invalid]="signupForm.get('password').invalid && (signupForm.get('password').dirty || signupForm.get('password').touched || signupForm['submitted'])"
+            [class.is-valid]="signupForm.get('password').valid && (signupForm.get('password').dirty || signupForm.get('password').touched || signupForm['submitted'])">
             <label for="floatingPassword">Password</label>
+            <span class="text-danger" *ngIf="signupForm.get('password').invalid && (signupForm.get('password').dirty || signupForm.get('password').touched || signupForm['submitted']) && signupForm.get('password').errors?.required">Password cannot be empty</span>
         </div>
         <br>
         <div class="form-floating">
-            <input type="password" name="cpassword" class="form-control" id="floatingPassword1"
-                placeholder="Confirm Password" [(ngModel)]="signupViewModel.cpassword">
+            <input type="password" name="cpassword" class="form-control" id="floatingPassword1" placeholder="Confirm Password" formControlName="cpassword"
+            [class.is-invalid]="signupForm.get('cpassword').invalid && (signupForm.get('cpassword').dirty || signupForm.get('cpassword').touched || signupForm['submitted'])"
+            [class.is-valid]="signupForm.get('cpassword').valid && (signupForm.get('cpassword').dirty || signupForm.get('cpassword').touched || signupForm['submitted'])">
             <label for="floatingPassword1">Confirm password</label>
+            <span class="text-danger" *ngIf="signupForm.get('cpassword').invalid && (signupForm.get('cpassword').dirty || signupForm.get('cpassword').touched || signupForm['submitted']) && signupForm.get('cpassword').errors?.required">Confirm password cannot be empty</span>
+            <span class="text-danger" *ngIf="signupForm.get('cpassword').invalid && (signupForm.get('cpassword').dirty || signupForm.get('cpassword').touched || signupForm['submitted']) && signupForm.get('cpassword').errors?.compateValidator">Password and Confirm password do not match</span>
         </div>
         <br>
         <div>
-            <input type="button" name="button" class="w-100 btn btn-lg btn-primary" id="signin-btn"
-            (click)="onSignInClick()" value="Sign Up">
+            <input type="submit" name="button" class="w-100 btn btn-lg btn-primary" id="signin-btn" value="Sign Up">
             <span class="text-danger">{{signupError}}&nbsp;</span>
         </div>
         <p class="mt-1 mb-3 text-muted">Already signed up? <a (click)="openlogin()">Sign In</a></p>
@@ -49,6 +87,3 @@
         <span class="text-muted">&copy; 2023 Letschat. All rights reserved.</span>
     </div>
 </footer>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-    <mat-spinner></mat-spinner>
-</ngx-spinner>
