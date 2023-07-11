@@ -8,7 +8,7 @@ import { SignupComponent } from './signup/signup.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptorService } from './services/jwt-interceptor.service';
 import { JwtUnInterceptorService } from './services/jwt-un-interceptor.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainComponent } from './main/main.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderComponent } from './header/header.component';
@@ -61,6 +61,7 @@ import {MatCardModule} from '@angular/material/card';
     HttpClientModule,
     FontAwesomeModule,
     FormsModule,
+    ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

@@ -43,10 +43,6 @@ export class MainComponent {
     });
   }
 
-  // ngAfterViewInit() {
-  //   this.sidenav.toggle();
-  // }
-
   async userSelected(index: any) {
     let toLoad: boolean = false;
     if (this.selectedUserID != -1 && this.selectedUserID == this.users[index]._id) {
@@ -67,8 +63,8 @@ export class MainComponent {
         //   this.SpinnerService.hide();
         // } 
         else {
-          this.selectedChatID = response._id;
-          this.socketService.joinChatRoom(response._id);
+          this.selectedChatID = response[0]._id;
+          this.socketService.joinChatRoom(this.selectedChatID);
           this.SpinnerService.hide();
         }
       });

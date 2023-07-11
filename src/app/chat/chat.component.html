@@ -2,7 +2,7 @@
     <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>{{ userName | titlecase}}</mat-card-title>
-        <mat-card-subtitle>Personal</mat-card-subtitle>
+        <!-- <mat-card-subtitle [ngClass]="{ 'onlineText': userOnline == '1' }">{{ userOnline == '1' ? "In" : "Not in" }} the room</mat-card-subtitle> -->
         <button mat-button (click)="onChatClose()" class="ms-auto" matTooltip="Back">
             <mat-icon>arrow_back</mat-icon>
         </button>
@@ -17,7 +17,7 @@
             </div>
             <div class="p-2" *ngFor="let item of chats[key]">
                 <div [ngSwitch]="item.type">
-                    <div class="d-flex align-items-baseline mb-4" *ngSwitchCase="'incoming'">
+                    <div class="d-flex align-items-baseline" *ngSwitchCase="'incoming'">
                         <div class="pe-2">
                             <div *ngIf="item.file && item.file_type == 'image'">
                                 <img [src]="item.file" width="30%" class="zoom"/>
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex align-items-baseline text-end justify-content-end mb-4"
+                    <div class="d-flex align-items-baseline text-end justify-content-end"
                         *ngSwitchCase="'outgoing'">
                         <div class="pe-2">
                             <div *ngIf="item.file && item.file_type == 'image'">
@@ -59,8 +59,8 @@
                             <div class="card outgoing rounded-left d-inline-block p-2 px-3 m-1">
                                 {{item.msg | slangHider}}
                             </div>
-                            <div class="small p-1 m-0">
-                                <p [ngStyle]="{ 'color': messageRead ? 'blue': 'white' }">{{item.time | date: 'h:mm a'}}
+                            <div class="custom_text small p-1 m-0">
+                                <p>{{item.time | date: 'h:mm a'}}
                                 </p>
                             </div>
                         </div>
@@ -87,7 +87,4 @@
         </button>
     </div>
     </mat-card-actions>
-    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-        <mat-spinner></mat-spinner>
-    </ngx-spinner>
 </mat-card>

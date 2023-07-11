@@ -1,23 +1,27 @@
-<form class="text-center row p-5">
+<form class="text-center row p-5" [formGroup]="loginForm" (ngSubmit)="onLoginClick()">
     <div class="col-lg-6 col-xl-5 col-md-9 mx-auto">
         <br>
         <h1 class="h3 mb-3 fw-normal">Please Sign In</h1>
         <br><br>
         <div class="form-floating">
-            <input type="email" name="email" id="email" value="" class="form-control" id="floatingInput"
-                placeholder="name@example.com" [(ngModel)]="loginViewModel.email">
+            <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="email"
+            [class.is-invalid]="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched || loginForm['submitted'])"
+            [class.is-valid]="loginForm.get('email').valid && (loginForm.get('email').dirty || loginForm.get('email').touched || loginForm['submitted'])">
             <label for="floatingInput">Email address</label>
+            <span class="text-danger" *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched || loginForm['submitted']) && loginForm.get('email').errors?.required">Email cannot be empty</span>
+            <span class="text-danger" *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched || loginForm['submitted']) && loginForm.get('email').errors?.email">Email is not valid</span>
         </div>
         <br>
         <div class="form-floating">
-            <input type="password" name="password" id="password" value="" class="form-control" id="floatingPassword"
-                placeholder="Password" [(ngModel)]="loginViewModel.password">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" formControlName="password"
+            [class.is-invalid]="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched || loginForm['submitted'])"
+            [class.is-valid]="loginForm.get('password').valid && (loginForm.get('password').dirty || loginForm.get('password').touched || loginForm['submitted'])">
             <label for="floatingPassword">Password</label>
+            <span class="text-danger" *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched || loginForm['submitted']) && loginForm.get('password').errors?.required">Password cannot be empty</span>
         </div>
         <br>
         <div>
-            <input type="button" class="w-100 btn btn-lg btn-primary" id="signin-btn" value="Sign In"
-            (click)="onLoginClick($event)">
+            <input type="submit" class="w-100 btn btn-lg btn-primary" id="signin-btn" value="Sign In">
             <span class="text-danger"><h2>{{loginError}}</h2></span>
         </div>
         <p class="mt-1 mb-3 text-muted">Not a user yet? <a (click)="opensignup()">Sign Up</a></p>
@@ -28,9 +32,3 @@
         <span class="text-muted">&copy; 2023 Letschat. All rights reserved.</span>
     </div>
 </footer>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-    <!-- <p style="color: white">Please Wait. </p> -->
-    <mat-spinner></mat-spinner>
-    <!-- <mat-progress-spinner class="example-margin" [color]="primary" [mode]="determinate" [value]="value"></mat-progress-spinner> -->
-
-</ngx-spinner>
