@@ -56,7 +56,7 @@ export class MainComponent {
       this.selectedUserID = this.users[index]._id;
       this.SpinnerService.show();
       this.userService.getChat(this.selectedUserID).subscribe(async (response) => {
-        if (response == null) {
+        if (response.length == 0) {
           this.createSelectedUserChat(this.selectedUserID);
         } 
         // else if(response.message == 'jwt expired') {
